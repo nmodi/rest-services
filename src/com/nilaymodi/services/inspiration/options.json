@@ -1,0 +1,70 @@
+{
+	"subjects": [
+		"pet",
+		"dog",
+		"toy",
+		"cityscape",
+		"landscape", 
+		"building", 
+		"fountain", 
+		"tree",
+		"car",
+		"sculpture", 
+		"event", 
+		"festival", 
+		"animal", 
+		"landmark",	
+		"flower"
+	],
+	"lensTypes": [
+		"macro",
+		"telephoto",
+		"standard/normal",
+		"wide angle", 
+		"ultrawide"
+	],
+	"times": [
+		"morning", 
+		"night",
+		"afternoon",
+		"evening",
+		"dawn",
+		"dusk"
+	],
+	"lights": [
+		"rembrandt",
+		"backlit",
+		"clamshell",
+		"natural", 
+		"colored",
+		"split", 
+		"high key", 
+		"low key"
+	], 
+	"modifiers": [
+		"prism", 
+		"sandwich bag"	
+	], 
+	"colors": [
+		"red",
+		"orange",
+		"yellow", 
+		"green",
+		"blue", 
+		"purple",
+		"white",
+		"black",
+		"gray", 
+		"pink", 
+		"brown"
+	], 
+	"concepts": [
+		"sports",
+		"water",
+		"food", 
+		"fashion",
+		"portrait",
+		"architecture",
+		"product"
+	]
+}
