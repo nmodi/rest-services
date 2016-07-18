@@ -29,6 +29,6 @@ public class Endpoints {
 	@Path("/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response testConnection() {
-		return Response.ok("Sucess! Service is running.", MediaType.TEXT_PLAIN).build();
+		return Response.ok("Success! Service is running.", MediaType.TEXT_PLAIN).build();
 	}
 }
