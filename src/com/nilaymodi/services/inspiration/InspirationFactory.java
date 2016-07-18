@@ -17,11 +17,18 @@ public class InspirationFactory {
 		Inspiration inspiration = new Inspiration();
 
 		setSubjectOrConcept(options, inspiration);
-		inspiration.setLensType(chooseLensType(options));
-		inspiration.setTime(chooseTime(options));
-		inspiration.setLight(chooseLight(options));
-		inspiration.setModifier(chooseModifier(options));
-		inspiration.setColor(chooseColor(options));
+
+		inspiration.setLensType(
+				chooseOption(options.getLensTypes(), InspirationConstants.SKIP_RATE_LOW));
+		inspiration
+				.setTime(chooseOption(options.getTimes(), InspirationConstants.SKIP_RATE_DEFAULT));
+		inspiration
+				.setLight(chooseOption(options.getLights(), InspirationConstants.SKIP_RATE_MEDIUM));
+		inspiration.setModifier(
+				chooseOption(options.getModifiers(), InspirationConstants.SKIP_RATE_HIGH));
+		inspiration
+				.setColor(chooseOption(options.getColors(), InspirationConstants.SKIP_RATE_HIGH));
+
 		inspiration.setPhoto(retrievePhoto(inspiration.buildSearchTags()));
 		inspiration.setSentence(buildSentence(inspiration));
 
@@ -41,42 +48,10 @@ public class InspirationFactory {
 		}
 	}
 
-	private static String chooseLensType(InspirationOptions options) {
+	private static String chooseOption(List<String> choices, double skipRate) {
 		String ret = null;
-		if (ThreadLocalRandom.current().nextDouble() > InspirationConstants.SKIP_RATE_LOW) {
-			ret = getRandomStringFromList(options.getLensTypes());
-		}
-		return ret;
-	}
-
-	private static String chooseTime(InspirationOptions options) {
-		String ret = null;
-		if (ThreadLocalRandom.current().nextDouble() > InspirationConstants.SKIP_RATE_DEFAULT) {
-			ret = getRandomStringFromList(options.getTimes());
-		}
-		return ret;
-	}
-
-	private static String chooseLight(InspirationOptions options) {
-		String ret = null;
-		if (ThreadLocalRandom.current().nextDouble() > InspirationConstants.SKIP_RATE_MEDIUM) {
-			ret = getRandomStringFromList(options.getLights());
-		}
-		return ret;
-	}
-
-	private static String chooseModifier(InspirationOptions options) {
-		String ret = null;
-		if (ThreadLocalRandom.current().nextDouble() > InspirationConstants.SKIP_RATE_HIGH) {
-			ret = getRandomStringFromList(options.getModifiers());
-		}
-		return ret;
-	}
-
-	private static String chooseColor(InspirationOptions options) {
-		String ret = null;
-		if (ThreadLocalRandom.current().nextDouble() > InspirationConstants.SKIP_RATE_HIGH) {
-			ret = getRandomStringFromList(options.getColors());
+		if (ThreadLocalRandom.current().nextDouble() > skipRate) {
+			ret = getRandomStringFromList(choices);
 		}
 		return ret;
 	}
