@@ -3,6 +3,13 @@ package com.nilaymodi.services.inspiration;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.flickr4java.flickr.Flickr;
+import com.flickr4java.flickr.FlickrException;
+import com.flickr4java.flickr.REST;
+import com.flickr4java.flickr.photos.Photo;
+import com.flickr4java.flickr.photos.PhotoList;
+import com.flickr4java.flickr.photos.SearchParameters;
+
 public class InspirationFactory {
 
 	public static Inspiration generate() {
@@ -15,9 +22,7 @@ public class InspirationFactory {
 		inspiration.setLight(chooseLight(options));
 		inspiration.setModifier(chooseModifier(options));
 		inspiration.setColor(chooseColor(options));
-
-		System.out.println(inspiration.buildSearchString());
-
+		inspiration.setPhoto(retrievePhoto(inspiration.buildSearchTags()));
 		inspiration.setSentence(buildSentence(inspiration));
 
 		return inspiration;
@@ -78,6 +83,32 @@ public class InspirationFactory {
 
 	private static String getRandomStringFromList(List<String> list) {
 		return list.get(ThreadLocalRandom.current().nextInt(list.size()));
+	}
+
+	private static Image retrievePhoto(String[] tags) {
+
+		Flickr f = new Flickr(InspirationConstants.FLICKR_KEY, InspirationConstants.FLICKR_SECRET,
+				new REST());
+
+		SearchParameters params = new SearchParameters();
+		params.setTags(tags);
+
+		PhotoList<Photo> results = null;
+		Photo topResult = null;
+
+		try {
+			results = f.getPhotosInterface().search(params, 100, 1);
+			topResult = results.get(0);
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
+
+		Image image = new Image();
+		image.setTitle(topResult.getTitle());
+		image.setPageUrl(topResult.getUrl());
+		image.setImageUrl(topResult.getLargeUrl());
+
+		return image;
 	}
 
 	private static String buildSentence(Inspiration inspiration) {

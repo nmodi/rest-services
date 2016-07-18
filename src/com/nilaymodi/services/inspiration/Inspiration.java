@@ -1,50 +1,50 @@
 package com.nilaymodi.services.inspiration;
 
+import java.util.ArrayList;
+
 public class Inspiration {
 
-	private String		subject;
-	private String		lensType;
-	private String		time;
-	private String		light;
-	private String		modifier;
-	private String		color;
-	private String		concept;
-	private String		sentence;
-	private FlickrImage	image;
+	private String	subject;
+	private String	lensType;
+	private String	time;
+	private String	light;
+	private String	modifier;
+	private String	color;
+	private String	concept;
+	private String	sentence;
+	private Image	photo;
 
-	public String buildSearchString() {
-		StringBuilder sb = new StringBuilder();
+	public String[] buildSearchTags() {
+		ArrayList<String> tags = new ArrayList<String>();
 
 		if (subject != null) {
-			sb.append(subject);
-			sb.append(" ");
+			tags.add(subject);
 		}
 
 		if (lensType != null) {
-			sb.append(lensType);
-			sb.append(" ");
+			tags.add(lensType);
 		}
 
 		if (time != null) {
-			sb.append(time);
-			sb.append(" ");
+			tags.add(time);
 		}
 
 		if (light != null) {
-			sb.append(light);
-			sb.append(" lighting ");
+			tags.add(light + " lighting");
 		}
 
 		if (color != null) {
-			sb.append(color);
-			sb.append(" ");
+			tags.add(color);
 		}
 
 		if (concept != null) {
-			sb.append(concept);
-			sb.append(" ");
+			tags.add(concept);
 		}
-		return sb.toString();
+
+		String[] ret = new String[tags.size()];
+		ret = tags.toArray(ret);
+
+		return ret;
 	}
 
 	public String getSubject() {
@@ -103,19 +103,19 @@ public class Inspiration {
 		this.concept = concept;
 	}
 
-	public FlickrImage getImage() {
-		return image;
-	}
-
-	public void setImage(FlickrImage image) {
-		this.image = image;
-	}
-
 	public String getSentence() {
 		return sentence;
 	}
 
 	public void setSentence(String sentence) {
 		this.sentence = sentence;
+	}
+
+	public Image getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Image photo) {
+		this.photo = photo;
 	}
 }

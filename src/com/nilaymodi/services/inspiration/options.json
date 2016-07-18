@@ -43,7 +43,11 @@
 	], 
 	"modifiers": [
 		"prism", 
-		"sandwich bag"	
+		"sandwich bag", 
+		"long exposure", 
+		"fast shutter speed", 
+		"wide aperture",
+		"narrow aperture"
 	], 
 	"colors": [
 		"red",
