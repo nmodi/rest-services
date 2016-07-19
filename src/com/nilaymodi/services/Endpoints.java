@@ -6,23 +6,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.gson.Gson;
-import com.nilaymodi.services.inspiration.Inspiration;
-import com.nilaymodi.services.inspiration.InspirationFactory;
+import com.nilaymodi.services.inspiration.InspirationGeneratorService;
 
-@Path("/inspiration")
+@Path("/")
 public class Endpoints {
 
 	@GET
-	@Path("/")
+	@Path("/inspiration")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInspiration() {
-		Inspiration inspiration = InspirationFactory.generate();
-
-		Gson gson = new Gson();
-		String result = gson.toJson(inspiration, Inspiration.class);
-
-		return Response.ok(result, MediaType.APPLICATION_JSON).build();
+		return Response
+				.ok(new InspirationGeneratorService().getJsonResult(), MediaType.APPLICATION_JSON)
+				.build();
 	}
 
 	@GET

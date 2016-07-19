@@ -1,6 +1,6 @@
-package com.nilaymodi.services.inspiration;
+package com.nilaymodi.services.inspiration.utils;
 
-public class InspirationConstants {
+public class Constants {
 	public static final String	OPTIONS_FILE_NAME	= "options.json";
 	public static final String	FLICKR_KEY			= "ec683e7104ca88832b802bec749fe89d";
 	public static final String	FLICKR_SECRET		= "bbf432cc649d7821";

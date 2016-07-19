@@ -9,32 +9,44 @@ import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.SearchParameters;
+import com.nilaymodi.services.inspiration.objects.Image;
+import com.nilaymodi.services.inspiration.objects.Inspiration;
+import com.nilaymodi.services.inspiration.options.InspirationOptions;
+import com.nilaymodi.services.inspiration.options.InspirationOptionsHandler;
+import com.nilaymodi.services.inspiration.utils.Constants;
+import com.nilaymodi.services.inspiration.utils.InspirationStringUtils;
 
 public class InspirationFactory {
 
+	/**
+	 * Generates a semi-random Inspiration object
+	 * 
+	 * @return
+	 */
 	public static Inspiration generate() {
 		InspirationOptions options = InspirationOptionsHandler.get().getOptions();
 		Inspiration inspiration = new Inspiration();
 
 		setSubjectOrConcept(options, inspiration);
+		inspiration.setLensType(chooseOption(options.getLensTypes(), Constants.SKIP_RATE_LOW));
+		inspiration.setTime(chooseOption(options.getTimes(), Constants.SKIP_RATE_DEFAULT));
+		inspiration.setLight(chooseOption(options.getLights(), Constants.SKIP_RATE_MEDIUM));
+		inspiration.setModifier(chooseOption(options.getModifiers(), Constants.SKIP_RATE_HIGH));
+		inspiration.setColor(chooseOption(options.getColors(), Constants.SKIP_RATE_HIGH));
 
-		inspiration.setLensType(
-				chooseOption(options.getLensTypes(), InspirationConstants.SKIP_RATE_LOW));
-		inspiration
-				.setTime(chooseOption(options.getTimes(), InspirationConstants.SKIP_RATE_DEFAULT));
-		inspiration
-				.setLight(chooseOption(options.getLights(), InspirationConstants.SKIP_RATE_MEDIUM));
-		inspiration.setModifier(
-				chooseOption(options.getModifiers(), InspirationConstants.SKIP_RATE_HIGH));
-		inspiration
-				.setColor(chooseOption(options.getColors(), InspirationConstants.SKIP_RATE_HIGH));
-
-		inspiration.setPhoto(retrievePhoto(inspiration.buildSearchTags()));
-		inspiration.setSentence(buildSentence(inspiration));
+		inspiration.setPhoto(retrievePhoto(InspirationStringUtils.buildSearchTags(inspiration)));
+		inspiration.setSentence(InspirationStringUtils.buildSentence(inspiration));
 
 		return inspiration;
 	}
 
+	/**
+	 * Sets the subject or concept for the Inspiration. Inspiration can have a
+	 * subject, concept, or neither.
+	 * 
+	 * @param options
+	 * @param inspiration
+	 */
 	private static void setSubjectOrConcept(InspirationOptions options, Inspiration inspiration) {
 
 		double d = ThreadLocalRandom.current().nextDouble();
@@ -48,6 +60,14 @@ public class InspirationFactory {
 		}
 	}
 
+	/**
+	 * Randomly selects one of the choices from the list or skips the field
+	 * entirely based on the skip rate.
+	 * 
+	 * @param choices
+	 * @param skipRate
+	 * @return
+	 */
 	private static String chooseOption(List<String> choices, double skipRate) {
 		String ret = null;
 		if (ThreadLocalRandom.current().nextDouble() > skipRate) {
@@ -56,115 +76,48 @@ public class InspirationFactory {
 		return ret;
 	}
 
+	/**
+	 * Randomly selects one of the choices from the list.
+	 * 
+	 * @param list
+	 * @return
+	 */
 	private static String getRandomStringFromList(List<String> list) {
 		return list.get(ThreadLocalRandom.current().nextInt(list.size()));
 	}
 
+	/**
+	 * Calls Flickr API to generate an Image. Search uses fields of Inspiration
+	 * object as tags.
+	 * 
+	 * @param tags
+	 * @return
+	 */
 	private static Image retrievePhoto(String[] tags) {
 
-		Flickr f = new Flickr(InspirationConstants.FLICKR_KEY, InspirationConstants.FLICKR_SECRET,
-				new REST());
+		// TODO this whole method needs to be improved...
+
+		Flickr f = new Flickr(Constants.FLICKR_KEY, Constants.FLICKR_SECRET, new REST());
 
 		SearchParameters params = new SearchParameters();
 		params.setTags(tags);
 
 		PhotoList<Photo> results = null;
-		Photo topResult = null;
+		Photo result = null;
 
 		try {
 			results = f.getPhotosInterface().search(params, 100, 1);
-			topResult = results.get(0);
 		} catch (FlickrException e) {
 			e.printStackTrace();
 		}
 
+		result = results.get(ThreadLocalRandom.current().nextInt(10));
+
 		Image image = new Image();
-		image.setTitle(topResult.getTitle());
-		image.setPageUrl(topResult.getUrl());
-		image.setImageUrl(topResult.getLargeUrl());
+		image.setTitle(result.getTitle());
+		image.setPageUrl(result.getUrl());
+		image.setImageUrl(result.getLargeUrl());
 
 		return image;
-	}
-
-	private static String buildSentence(Inspiration inspiration) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Take a picture ");
-
-		if (inspiration.getSubject() != null || inspiration.getConcept() != null) {
-			sb.append("of");
-			sb.append(getSubjectConceptArticle(inspiration));
-			sb.append(" ");
-
-			if (inspiration.getSubject() != null) {
-				sb.append(inspiration.getSubject());
-			} else {
-				sb.append(inspiration.getConcept());
-			}
-			sb.append(" ");
-		}
-
-		if (inspiration.getLight() != null) {
-			sb.append("using ");
-			sb.append(inspiration.getLight());
-			sb.append(" lighting ");
-		}
-
-		if (inspiration.getTime() != null) {
-			sb.append("at ");
-			sb.append(inspiration.getTime());
-			sb.append(" ");
-		}
-
-		if (inspiration.getModifier() != null) {
-			sb.append("with");
-			sb.append(getArticle(inspiration.getModifier()));
-			sb.append(" ");
-			sb.append(inspiration.getModifier());
-			sb.append(" ");
-		}
-
-		if (inspiration.getColor() != null) {
-			sb.append("evoking the color ");
-			sb.append(inspiration.getColor());
-		}
-
-		if (sb.charAt(sb.length() - 1) == ' ') {
-			sb.setCharAt(sb.length() - 1, '.');
-		} else {
-			sb.append('.');
-		}
-
-		return sb.toString();
-	}
-
-	private static String getSubjectConceptArticle(Inspiration inspiration) {
-		if (inspiration.getSubject() == null && inspiration.getConcept() == null) {
-			return "";
-		}
-
-		return getArticle(inspiration.getSubject());
-	}
-
-	private static String getArticle(String word) {
-		if (word != null) {
-			if (checkForVowel(word)) {
-				return " an";
-			} else {
-				return " a";
-			}
-		}
-
-		return "";
-	}
-
-	private static boolean checkForVowel(String word) {
-		for (char vowel : InspirationConstants.VOWELS) {
-			if (Character.toLowerCase(word.charAt(0)) == Character.toLowerCase(vowel)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 }

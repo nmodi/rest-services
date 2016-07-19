@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="inspirationApp">
 <head>
 <meta charset="ISO-8859-1">
 <title>Inspiration Generator</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<script src="js/inspiration.js"></script>
 </head>
 <body>
-	<p>testing</p>
+	<div ng-controller="Inspire">
+		<span id="inspiration">{{ inspiration.sentence }}</span>
+		<img id="image" ng-src="{{inspiration.photo.imageUrl}}"></img>
+	</div>
 </body>
 </html>

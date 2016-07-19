@@ -1,4 +1,4 @@
-package com.nilaymodi.services.inspiration;
+package com.nilaymodi.services.inspiration.options;
 
 import java.util.List;
 

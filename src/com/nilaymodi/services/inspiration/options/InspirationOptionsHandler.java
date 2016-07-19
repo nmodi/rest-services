@@ -1,4 +1,4 @@
-package com.nilaymodi.services.inspiration;
+package com.nilaymodi.services.inspiration.options;
 
 import java.io.InputStreamReader;
 
@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.nilaymodi.services.inspiration.utils.Constants;
 
 public class InspirationOptionsHandler {
 
@@ -30,7 +31,7 @@ public class InspirationOptionsHandler {
 		Gson gson = new Gson();
 
 		JsonReader reader = new JsonReader(new InputStreamReader(
-				getClass().getResourceAsStream(InspirationConstants.OPTIONS_FILE_NAME)));
+				getClass().getResourceAsStream(Constants.OPTIONS_FILE_NAME)));
 
 		options = gson.fromJson(reader, InspirationOptions.class);
 

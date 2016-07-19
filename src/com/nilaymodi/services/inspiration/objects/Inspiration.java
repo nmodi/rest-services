@@ -1,6 +1,4 @@
-package com.nilaymodi.services.inspiration;
-
-import java.util.ArrayList;
+package com.nilaymodi.services.inspiration.objects;
 
 public class Inspiration {
 
@@ -13,39 +11,6 @@ public class Inspiration {
 	private String	concept;
 	private String	sentence;
 	private Image	photo;
-
-	public String[] buildSearchTags() {
-		ArrayList<String> tags = new ArrayList<String>();
-
-		if (subject != null) {
-			tags.add(subject);
-		}
-
-		if (lensType != null) {
-			tags.add(lensType);
-		}
-
-		if (time != null) {
-			tags.add(time);
-		}
-
-		if (light != null) {
-			tags.add(light + " lighting");
-		}
-
-		if (color != null) {
-			tags.add(color);
-		}
-
-		if (concept != null) {
-			tags.add(concept);
-		}
-
-		String[] ret = new String[tags.size()];
-		ret = tags.toArray(ret);
-
-		return ret;
-	}
 
 	public String getSubject() {
 		return subject;
