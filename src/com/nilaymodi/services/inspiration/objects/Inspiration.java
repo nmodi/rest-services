@@ -8,7 +8,7 @@ public class Inspiration {
 	private String	light;
 	private String	modifier;
 	private String	color;
-	private String	concept;
+	private String	pluralSubject;
 	private String	sentence;
 	private Image	photo;
 
@@ -60,12 +60,12 @@ public class Inspiration {
 		this.color = color;
 	}
 
-	public String getConcept() {
-		return concept;
+	public String getPluralSubject() {
+		return pluralSubject;
 	}
 
-	public void setConcept(String concept) {
-		this.concept = concept;
+	public void setPluralSubject(String pluralSubject) {
+		this.pluralSubject = pluralSubject;
 	}
 
 	public String getSentence() {

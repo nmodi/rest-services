@@ -4,13 +4,18 @@ import java.util.List;
 
 public class InspirationOptions {
 
+	/**
+	 * The fields in this class must match up exactly with the names of the
+	 * arrays in Options.json
+	 */
+
 	private List<String>	subjects;
 	private List<String>	lensTypes;
 	private List<String>	times;
 	private List<String>	lights;
 	private List<String>	modifiers;
 	private List<String>	colors;
-	private List<String>	concepts;
+	private List<String>	pluralSubjects;
 
 	public List<String> getSubjects() {
 		return subjects;
@@ -60,12 +65,12 @@ public class InspirationOptions {
 		this.colors = colors;
 	}
 
-	public List<String> getConcepts() {
-		return concepts;
+	public List<String> getPluralSubject() {
+		return pluralSubjects;
 	}
 
-	public void setConcepts(List<String> concepts) {
-		this.concepts = concepts;
+	public void setPluralSubjects(List<String> pluralSubjects) {
+		this.pluralSubjects = pluralSubjects;
 	}
 
 }

@@ -3,7 +3,6 @@ package com.nilaymodi.services.inspiration;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.flickr4java.flickr.Flickr;
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.photos.Photo;
@@ -14,6 +13,7 @@ import com.nilaymodi.services.inspiration.objects.Inspiration;
 import com.nilaymodi.services.inspiration.options.InspirationOptions;
 import com.nilaymodi.services.inspiration.options.InspirationOptionsHandler;
 import com.nilaymodi.services.inspiration.utils.Constants;
+import com.nilaymodi.services.inspiration.utils.InspirationFlickr;
 import com.nilaymodi.services.inspiration.utils.InspirationStringUtils;
 
 public class InspirationFactory {
@@ -27,7 +27,7 @@ public class InspirationFactory {
 		InspirationOptions options = InspirationOptionsHandler.get().getOptions();
 		Inspiration inspiration = new Inspiration();
 
-		setSubjectOrConcept(options, inspiration);
+		setSubject(options, inspiration);
 		inspiration.setLensType(chooseOption(options.getLensTypes(), Constants.SKIP_RATE_LOW));
 		inspiration.setTime(chooseOption(options.getTimes(), Constants.SKIP_RATE_DEFAULT));
 		inspiration.setLight(chooseOption(options.getLights(), Constants.SKIP_RATE_MEDIUM));
@@ -47,14 +47,14 @@ public class InspirationFactory {
 	 * @param options
 	 * @param inspiration
 	 */
-	private static void setSubjectOrConcept(InspirationOptions options, Inspiration inspiration) {
+	private static void setSubject(InspirationOptions options, Inspiration inspiration) {
 
 		double d = ThreadLocalRandom.current().nextDouble();
 
 		if (d < 0.50) {
 			inspiration.setSubject(getRandomStringFromList(options.getSubjects()));
 		} else if (d < 0.75) {
-			inspiration.setConcept(getRandomStringFromList(options.getConcepts()));
+			inspiration.setPluralSubject(getRandomStringFromList(options.getPluralSubject()));
 		} else {
 			// Do nothing
 		}
@@ -93,31 +93,48 @@ public class InspirationFactory {
 	 * @param tags
 	 * @return
 	 */
-	private static Image retrievePhoto(String[] tags) {
+	public static Image retrievePhoto(String[] tags) {
+		PhotoList<Photo> results = getResultsList(tags);
 
-		// TODO this whole method needs to be improved...
-
-		Flickr f = new Flickr(Constants.FLICKR_KEY, Constants.FLICKR_SECRET, new REST());
-
-		SearchParameters params = new SearchParameters();
-		params.setTags(tags);
-
-		PhotoList<Photo> results = null;
 		Photo result = null;
+		Image image = new Image();
 
-		try {
-			results = f.getPhotosInterface().search(params, 100, 1);
-		} catch (FlickrException e) {
-			e.printStackTrace();
+		while (!resultIsValid(result)) {
+			result = results.get(ThreadLocalRandom.current().nextInt(10));
 		}
 
-		result = results.get(ThreadLocalRandom.current().nextInt(10));
-
-		Image image = new Image();
 		image.setTitle(result.getTitle());
 		image.setPageUrl(result.getUrl());
 		image.setImageUrl(result.getLargeUrl());
 
 		return image;
 	}
+
+	private static PhotoList<Photo> getResultsList(String[] tags) {
+		InspirationFlickr f = new InspirationFlickr(Constants.FLICKR_KEY, Constants.FLICKR_SECRET,
+				new REST());
+
+		SearchParameters params = new SearchParameters();
+		params.setTags(tags);
+
+		PhotoList<Photo> results = null;
+
+		try {
+			results = f.getPhotosInterface().search(params, 100, 1);
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+
+	/**
+	 * Checks if the given Photo file has
+	 * 
+	 * @param result
+	 * @return
+	 */
+	private static boolean resultIsValid(Photo result) {
+		return (result != null && null != result.getTitle() && !result.getTitle().isEmpty());
+	}
+
 }

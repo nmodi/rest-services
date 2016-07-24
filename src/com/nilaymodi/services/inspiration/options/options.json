@@ -2,7 +2,7 @@
 	"subjects": [
 		"pet",
 		"dog",
-		"toy",
+		"cat",
 		"cityscape",
 		"landscape", 
 		"building", 
@@ -14,7 +14,33 @@
 		"festival", 
 		"animal", 
 		"landmark",	
-		"flower"
+		"flower",
+		"rock",
+		"person",
+		"lake",
+		"stream",
+		"apple",
+		"orange",
+		"pineapple",
+		"book",
+		"barn",
+		"field",
+		"couple",
+		"pattern",
+		"smile",
+		"party", 
+		"concert",
+		"road",
+		"argument",
+		"forest",
+		"path", 
+		"runner",
+		"sky",
+		"boat",
+		"ship",
+		"house",
+		"column",
+		"statue"
 	],
 	"lensTypes": [
 		"macro",
@@ -32,9 +58,7 @@
 		"dusk"
 	],
 	"lights": [
-		"rembrandt",
 		"backlit",
-		"clamshell",
 		"natural", 
 		"colored",
 		"split", 
@@ -42,8 +66,6 @@
 		"low key"
 	], 
 	"modifiers": [
-		"prism", 
-		"sandwich bag", 
 		"long exposure", 
 		"fast shutter speed", 
 		"wide aperture",
@@ -59,16 +81,16 @@
 		"white",
 		"black",
 		"gray", 
-		"pink", 
-		"brown"
-	], 
-	"concepts": [
+		"pink" 
+		], 
+	"pluralSubjects": [
 		"sports",
 		"water",
 		"food", 
 		"fashion",
 		"portrait",
 		"architecture",
-		"product"
+		"conflict",
+		"jewellery"
 	]
 }

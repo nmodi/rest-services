@@ -29,8 +29,8 @@ public class InspirationStringUtils {
 			tags.add(i.getColor());
 		}
 
-		if (i.getConcept() != null) {
-			tags.add(i.getConcept());
+		if (i.getPluralSubject() != null) {
+			tags.add(i.getPluralSubject());
 		}
 
 		String[] ret = new String[tags.size()];
@@ -44,22 +44,21 @@ public class InspirationStringUtils {
 
 		sb.append("Take a picture ");
 
-		if (inspiration.getSubject() != null || inspiration.getConcept() != null) {
+		if (inspiration.getSubject() != null || inspiration.getPluralSubject() != null) {
 			sb.append("of");
 			sb.append(" ");
-			sb.append(getSubjectConceptArticle(inspiration));
-			sb.append(" ");
+			sb.append(getSubjectArticle(inspiration));
 
 			if (inspiration.getSubject() != null) {
 				sb.append(inspiration.getSubject());
 			} else {
-				sb.append(inspiration.getConcept());
+				sb.append(inspiration.getPluralSubject());
 			}
 			sb.append(" ");
 		}
 
 		if (inspiration.getLight() != null) {
-			sb.append("using ");
+			sb.append("under ");
 			sb.append(inspiration.getLight());
 			sb.append(" lighting ");
 		}
@@ -71,10 +70,9 @@ public class InspirationStringUtils {
 		}
 
 		if (inspiration.getModifier() != null) {
-			sb.append("with");
+			sb.append("using");
 			sb.append(" ");
 			sb.append(getArticle(inspiration.getModifier()));
-			sb.append(" ");
 			sb.append(inspiration.getModifier());
 			sb.append(" ");
 		}
@@ -86,10 +84,9 @@ public class InspirationStringUtils {
 		}
 
 		if (inspiration.getLensType() != null) {
-			sb.append("using");
+			sb.append("with");
 			sb.append(" ");
 			sb.append(getArticle(inspiration.getLensType()));
-			sb.append(" ");
 			sb.append(inspiration.getLensType());
 			sb.append(" lens");
 		}
@@ -103,8 +100,8 @@ public class InspirationStringUtils {
 		return sb.toString();
 	}
 
-	private static String getSubjectConceptArticle(Inspiration inspiration) {
-		if (inspiration.getSubject() == null && inspiration.getConcept() == null) {
+	private static String getSubjectArticle(Inspiration inspiration) {
+		if (inspiration.getSubject() == null && inspiration.getPluralSubject() == null) {
 			return "";
 		}
 
@@ -114,9 +111,9 @@ public class InspirationStringUtils {
 	private static String getArticle(String word) {
 		if (word != null) {
 			if (checkForVowel(word)) {
-				return "an";
+				return "an ";
 			} else {
-				return "a";
+				return "a ";
 			}
 		}
 
