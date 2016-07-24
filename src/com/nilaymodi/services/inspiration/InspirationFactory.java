@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
+import com.flickr4java.flickr.people.User;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
 import com.flickr4java.flickr.photos.SearchParameters;
@@ -17,6 +18,9 @@ import com.nilaymodi.services.inspiration.utils.InspirationFlickr;
 import com.nilaymodi.services.inspiration.utils.InspirationStringUtils;
 
 public class InspirationFactory {
+
+	protected static InspirationFlickr f = new InspirationFlickr(Constants.FLICKR_KEY,
+			Constants.FLICKR_SECRET, new REST());
 
 	/**
 	 * Generates a semi-random Inspiration object
@@ -100,20 +104,36 @@ public class InspirationFactory {
 		Image image = new Image();
 
 		while (!resultIsValid(result)) {
-			result = results.get(ThreadLocalRandom.current().nextInt(10));
+			// Pick random image from top 25% of results
+			result = results.get(ThreadLocalRandom.current().nextInt(results.size() / 4));
 		}
 
 		image.setTitle(result.getTitle());
 		image.setPageUrl(result.getUrl());
 		image.setImageUrl(result.getLargeUrl());
+		image.setAuthor(getAuthorUsername(result));
 
 		return image;
 	}
 
-	private static PhotoList<Photo> getResultsList(String[] tags) {
-		InspirationFlickr f = new InspirationFlickr(Constants.FLICKR_KEY, Constants.FLICKR_SECRET,
-				new REST());
+	private static String getAuthorUsername(Photo result) {
+		User info = null;
+		String userName = null;
 
+		try {
+			info = f.getPeopleInterface().getInfo(result.getOwner().getId());
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
+
+		if (null != info && null != info.getUsername()) {
+			userName = info.getUsername();
+		}
+
+		return userName;
+	}
+
+	private static PhotoList<Photo> getResultsList(String[] tags) {
 		SearchParameters params = new SearchParameters();
 		params.setTags(tags);
 
@@ -124,11 +144,12 @@ public class InspirationFactory {
 		} catch (FlickrException e) {
 			e.printStackTrace();
 		}
+
 		return results;
 	}
 
 	/**
-	 * Checks if the given Photo file has
+	 * Checks if the given Photo file is valid with a valid title.
 	 * 
 	 * @param result
 	 * @return

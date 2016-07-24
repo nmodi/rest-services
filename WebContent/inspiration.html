@@ -6,11 +6,31 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 <script src="js/inspiration.js"></script>
+<link rel="stylesheet" type="text/css" href="css/inspiration.css">
+
 </head>
 <body>
 	<div ng-controller="Inspire">
-		<span id="inspiration">{{ inspiration.sentence }}</span>
-		<img id="image" ng-src="{{inspiration.photo.imageUrl}}"></img>
+		<div class="content">
+			<span id="inspiration" class="center">{{ inspiration.sentence }}</span>
+
+			
+			<div class="img_box"><img class="center" ng-src="{{inspiration.photo.imageUrl}}"></img></div>
+			
+			<div class="subtitle center">
+				<p><a class="img_title" target="_blank" ng-href="{{inspiration.photo.pageUrl}}">{{inspiration.photo.title}}</a> {{inspiration.photo.author}}</p>
+			</div>
+			
+			<div class="center">
+				<p>Refresh to see another inspiration.</p>
+				<p>Disclaimer: note that the picture will almost never match up properly. This is because of Flickr's search. When it does match up, cherish it!</p>
+			</div>
+
+		</div>
+		<div class="footer">
+			<span class="footer_text">This product uses the Flickr API but is not endorsed or certified by Flickr.</span>
+		</div>
+
 	</div>
 </body>
 </html>
