@@ -10,27 +10,34 @@
 
 </head>
 <body>
-	<div ng-controller="Inspire">
+	<div class="wrapper" ng-controller="Inspire">
 		<div class="content">
-			<span id="inspiration" class="center">{{ inspiration.sentence }}</span>
 
-			
-			<div class="img_box"><img class="center" ng-src="{{inspiration.photo.imageUrl}}"></img></div>
-			
-			<div class="subtitle center">
-				<p><a class="img_title" target="_blank" ng-href="{{inspiration.photo.pageUrl}}">{{inspiration.photo.title}}</a> {{inspiration.photo.author}}</p>
+
+			<div class="img_box">
+				<span class="inspiration center">{{ inspiration.sentence }}</span>
+				<img class="center" ng-src="{{inspiration.photo.imageUrl}}"></img>
 			</div>
-			
+
+			<div class="subtitle center">
+				<p>
+					<a class="img_title" target="_blank"
+						ng-href="{{inspiration.photo.pageUrl}}">{{inspiration.photo.title}}</a>
+					{{inspiration.photo.author}}
+				</p>
+			</div>
+
 			<div class="center">
 				<p>Refresh to see another inspiration.</p>
-				<p>Disclaimer: note that the picture will almost never match up properly. This is because of Flickr's search. When it does match up, cherish it!</p>
+				<p>Disclaimer: note that the picture will almost never match up
+					properly. This is because of Flickr's search. When it does match
+					up, cherish it!</p>
 			</div>
-
 		</div>
 		<div class="footer">
-			<span class="footer_text">This product uses the Flickr API but is not endorsed or certified by Flickr.</span>
+			<span>This product uses the Flickr API but
+				is not endorsed or certified by Flickr.</span>
 		</div>
-
 	</div>
 </body>
 </html>

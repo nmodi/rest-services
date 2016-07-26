@@ -1,0 +1,108 @@
+$pageBgColor: #F0F1EE;
+$galleryBgColor: #333332;
+$inspirationColor: #FFD464;
+$footerColor: #FB6964;
+$footerTextColor: #eee;
+
+$linkColor: $footerColor;
+$linkHover: $inspirationColor;
+$linkActive: lighten($footerColor, 10%);
+$linkVisited: darken($footerColor, 10%);
+
+$imgHeight: 600px;
+$footerSize: 50px;
+
+$contentWidth: 50%;
+
+
+html {
+	background-color: $pageBgColor;
+	font-family: "Andale Mono", "Consolas", monospaced;
+	height: 100%;
+	box-sizing: border-box;
+	color: #212124;
+}
+
+body {
+	margin: 0;
+	padding:0;
+	height:100%;
+}
+
+a {
+	color: $linkColor;
+
+	&:visited {
+		color: $linkVisited;
+	}
+	&:hover {
+		color: $linkHover;
+	}
+	&:active {
+		color: $linkActive;
+	}
+}
+
+.wrapper {
+	min-height:100%;
+	position:relative;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+	padding-bottom: $footerSize;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+	max-width: $contentWidth;
+}
+
+.inspiration {
+	font-size: 200%;
+    display: block;
+    text-align: center;
+    color: $inspirationColor;
+    padding-top: 15px;
+}
+
+.img_box {
+	background-color: $galleryBgColor;
+	img {
+	    max-width: 100%;
+	    max-height: $imgHeight;
+	    padding: 50px;
+	    width: auto\9; /* ie8 */
+	}
+}
+
+.subtitle {
+	text-align: right;
+	max-width: $contentWidth;
+	.img_title {
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	    font-weight: 700;
+	}
+}
+
+.footer {
+	width:100%;
+	height: $footerSize;
+	position:absolute;
+	bottom:0;
+	left:0;
+	text-align: center;
+	background-color: $footerColor;
+	border-top: thin solid darken($footerColor, 10%);
+
+	span {
+	    margin-top: 2em;
+		padding-top: 5px;
+	    color: $footerTextColor;
+	}
+}
