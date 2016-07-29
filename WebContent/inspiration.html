@@ -8,17 +8,29 @@
 <script src="js/inspiration.js"></script>
 <link rel="stylesheet" type="text/css" href="css/inspiration.css">
 
+<script src="https://use.typekit.net/idd2kdt.js"></script>
+<script>try{Typekit.load({ async: false });}catch(e){}</script>
+
 </head>
 <body>
 	<div class="wrapper" ng-controller="Inspire">
-		<div class="content">
-
-
-			<div class="img_box">
-				<span class="inspiration center">{{ inspiration.sentence }}</span>
-				<img class="center" ng-src="{{inspiration.photo.imageUrl}}"></img>
+		<div class="header">
+			<div class="center">
+				<ul class="navBar">
+					<li><a class="navItem homeIcon" href="/index.html">N</a></li>
+					<li><a class="navItem" href="applications.html">Applications</a></li>
+					<li><span class="navItem">Inspiration Generator</span></li>
+				</ul>
 			</div>
-
+		</div>
+		<div class="content">
+			<div class="img_box">
+				<div class="center">
+					<span class="inspiration">{{ inspiration.sentence }}</span>
+					<img ng-src="{{inspiration.photo.imageUrl}}"></img>
+				</div>
+				
+			</div>
 			<div class="subtitle center">
 				<p>
 					<a class="img_title" target="_blank"
@@ -27,7 +39,7 @@
 				</p>
 			</div>
 
-			<div class="center">
+			<div class="center textBox">
 				<p>Refresh to see another inspiration.</p>
 				<p>Disclaimer: note that the picture will almost never match up
 					properly. This is because of Flickr's search. When it does match
@@ -35,8 +47,9 @@
 			</div>
 		</div>
 		<div class="footer">
-			<span>This product uses the Flickr API but
-				is not endorsed or certified by Flickr.</span>
+			<p><span class="disclaimer">This product uses the Flickr API but
+				is not endorsed or certified by Flickr.</span> <br>
+			<span class="copyright">&copy; Nilay Modi 2016</span></p>
 		</div>
 	</div>
 </body>
