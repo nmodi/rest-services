@@ -13,11 +13,13 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
  
+ <!-- Serves dynamic content -->
   <servlet-mapping>
     <servlet-name>NMServlet</servlet-name>
     <url-pattern>/services/*</url-pattern>
   </servlet-mapping>
   
+  <!-- Serves static content -->
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/*</url-pattern>

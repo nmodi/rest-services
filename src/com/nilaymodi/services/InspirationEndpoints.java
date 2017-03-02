@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 import com.nilaymodi.services.inspiration.InspirationGeneratorService;
 
 @Path("/")
-public class Endpoints {
+public class InspirationEndpoints {
 
 	@GET
 	@Path("/inspiration")

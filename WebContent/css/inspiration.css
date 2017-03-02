@@ -22,6 +22,9 @@ a {
   a:active {
     color: #62c5fb; }
 
+.bold {
+  font-weight: 700; }
+
 .wrapper {
   min-height: 100%;
   position: relative; }
